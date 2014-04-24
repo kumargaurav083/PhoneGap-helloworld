@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <title>JavaArc Hello Phone Gap</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+        /** Called when phonegap javascript is loaded */
+        function onDeviceReady() {
+
+        }
+        function captureImage() {
+            var cameraOptions = { quality: 100 };
+            navigator.camera.getPicture(onSuccess, onError, cameraOptions);
+        };
+        function onSuccess(imageData) {
+            var image = document.getElementById('cameraImage');
+            imageData = imageData.replace("file:///storage/sdcard/", "file:///sdcard/");
+            alert(imageData);
+            //image.src = "data:image/jpeg;base64," + imageData;
+            image.src = imageData;
+        }
+        function onError(error) {
+            alert('code: ' + error.code + '\n' + 'message: ' + error.message + ' \n');
+        }
+        /** Called when browser load this page*/
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+
+
+    </script>
+</head>
+
+<body onload="init()">
+    <a href="index.html">Home Page</a>
+    <h1>Camera</h1>
+    <button id="capture" onclick="captureImage()">Capture Image</button>
+    <img id="cameraImage" style="min-width: 100px; min-height: 100px" src="file:///sdcard/android/data/com.example.phonegap_helloworld/cache/1398326157807.jpg"></img>
+</body>
+
+</html>

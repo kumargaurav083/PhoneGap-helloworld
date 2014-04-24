@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <title>JavaArc Hello Phone Gap</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+    <script type="text/javascript">
+        /** Called when phonegap javascript is loaded */
+        function onDeviceReady() {
+            document.getElementById("helloworld").innerHTML = "Hello World! Loaded PhoneGap Framework!";
+            document.getElementById("deviceName").innerHTML = device.name;
+            document.getElementById("version").innerHTML
+            = device.phonegap;
+            document.getElementById("mobilePlatform").innerHTML
+            = device.platform;
+            document.getElementById("platformVersion").innerHTML
+            = device.version;
+            document.getElementById("uuid").innerHTML
+            = device.uuid;
+        }
+
+
+        /** Called when browser load this page*/
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+
+        }
+    </script>
+</head>
+
+<body onload="init()">
+
+    <h3>Hello Phone Gap</h3>
+    <h3 id="helloworld">...</h3>
+    <h3>Device Info</h3>
+    <table border="1">
+        <tr>
+            <td>Device Name</td>
+            <td id="deviceName"></td>
+        </tr>
+        <tr>
+            <td>PhoneGap Version</td>
+            <td id="version"></td>
+        </tr>
+        <tr>
+            <td>Mobile Platform</td>
+            <td id="mobilePlatform"></td>
+        </tr>
+        <tr>
+            <td>Platform Version</td>
+            <td id="platformVersion"></td>
+        </tr>
+        <tr>
+            <td>UUID</td>
+            <td id="uuid"></td>
+        </tr>
+    </table>
+    <ul>
+        <li><a href="contact.html">Example Contact Fetch</a></li>
+        <li><a href="sd-card.html">Example Fetching the SD Card</a></li>
+        <li><a href="create-file.html">Example Create File</a></li>
+        <li><a href="con-info.html">Example Connection Info</a></li>
+        <li><a href="geolocation.html">Example Geolocation</a></li>
+        <li><a href="compass.html">Example Compass Bearings</a></li>
+        <li><a href="camera.html">Example Camera</a></li>
+        
+    </ul>
+</body>
+</html>

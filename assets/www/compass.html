@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <title>JavaArc Hello Phone Gap</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+        /** Called when phonegap javascript is loaded */
+        function onDeviceReady() {
+            var compassOptions = { frequency: 300 }
+            navigator.compass.watchHeading(onSuccessCallback, onErrorCallback, compassOptions);
+        }
+        function onSuccessCallback(heading) {
+            var image = document.getElementById('compass');
+            var headingDiv = document.getElementById('compassHeading');
+            headingDiv.innerHTML = heading.magneticHeading;
+            var reverseHeading = 360 - heading.magneticHeading;
+            image.style.webkitTransform = "rotate(" + reverseHeading + "deg)";
+        }
+        function onErrorCallback() {
+            alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+        }
+        /** Called when browser load this page*/
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+
+
+    </script>
+</head>
+
+<body onload="init()">
+    <a href="index.html">Home Page</a>
+    <h1>Compass</h1>
+    <table>
+        <tr>
+            <td>Compass Heading</td>
+            <td>
+                <div id="compassHeading">....</div>
+            </td>
+            <td>Degrees</td>
+        </tr>
+    </table>
+    <img id="compass" src="compass.png"
+        style="width: 200px; height: 200px; margin-left: auto; marginright: auto; auto; display: block"></img>
+</body>
+
+</html>

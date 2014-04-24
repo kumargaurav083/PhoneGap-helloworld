@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <title>JavaArc Hello Phone Gap</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+        /** Called when phonegap javascript is loaded */
+        function onDeviceReady() {
+            alert('Deviece is ready now.');
+        }
+        /** Called when browser load this page*/
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        function createFileOnSDCard() {
+            var fileNameAndPath = $("#txtFilename").val();
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+                var sdcardEntry = fileSystem.root;
+                sdcardEntry.getFile(
+                    fileNameAndPath,
+                    { create: true },
+                    function (fileEntry) {
+                        fileEntry.createWriter(function (fileWriter) {
+                            fileWriter.onwrite = function (evt) {
+                                alert("Write was successful!");
+                                document.getElementById("textarea").value = "";
+                            };
+                            fileWriter.write(document.getElementById("textarea").value);
+                        },
+                        function (error) {
+                            alert("Failed to get a file writer for " + filename);
+                        });
+                    },
+                    function (error) { alert("Got error while reading " + filename + " " + error); }
+                    );
+            }, function () {
+                alert("Got Error while gaining access to file system");
+            });
+        }
+        function readFileFromSDCard() {
+            var fileNameAndPath = $("#txtFilename").val();
+            window.resolveLocalFileSystemURL(fileNameAndPath,
+                    function (fileEntry) {
+                        fileEntry.file(function (file) {
+                            var fileReader = new FileReader();
+                            fileReader.onloadend = function (evt) {
+                                document.getElementById("textarea").value = evt.target.result;
+                            };
+                            fileReader.readAsText(file);
+                        },
+                        function (error) {
+                            alert("Got error while reading " + fileNameAndPath);
+                        });
+                    },
+                    function (err) {
+                        alert(fileNameAndPath + " not present, please add content and click Save first");
+                    })
+        }
+
+
+    </script>
+</head>
+
+<body onload="init()">
+    /*
+    In order to look up all of the properties and methods of a fileEntry, you need to have
+access to the appendix of the fileEntry. There are two ways of gaining this access:
+
+1. createWriter(): Creates a FileWriter object that can be used to write to a file.
+2. file(): Creates a File object containing file properties, including reading its
+
+    directoryEntry
+In order to list files in a directory you will need a directoryEntry object.
+    There is one method to gain this access:
+getFile(): Create File in a given directory,or Get File from a given directory.
+    */
+    <a href="index.html">Home Page</a>
+    <h3>Fetching the SD Card</h3>
+    <div id="divUserArea">
+        <input type="text" id="txtFilename" value="/sdcard/read-write.txt" />
+        <textarea id="textarea" rows="3" cols="30">
+        </textarea>
+        <select>
+            <option value="0">PERSISTENT</option>
+            <option value="1">TEMPORARY</option>
+        </select>
+        <a onclick="createFileOnSDCard()">Create File</a>
+        <a onclick="readFileFromSDCard()">Create File</a>
+    </div>
+</body>
+
+</html>

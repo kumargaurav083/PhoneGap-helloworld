@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <title>JavaArc Hello Phone Gap</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+    <script type="text/javascript">
+        /** Called when phonegap javascript is loaded */
+        function onDeviceReady() {
+            var options = new ContactFindOptions();
+            options.multiple = true;
+            options.filter = "";
+            var fields = ["displayName", "phoneNumbers"];
+            navigator.contacts.find(fields, onContactSuccess, onContactError, options);
+        }
+        function onContactSuccess(contacts) {
+            var ul = document.getElementById("list");           
+            for (var index = 0; index < contacts.length; index++) {
+                //var contact = contacts[index];
+                //var contactName = contact.name.formatted;
+                var name = contacts[index].displayName;
+                var phoneNumber = contacts[index].phoneNumbers[0].value;
+                var li = document.createElement('li');
+                li.innerHTML = "<a href=\"tel:" + phoneNumber + "\">" + name + '  : ' + phoneNumber + "</a>";
+                ul.appendChild(li);
+                //if (contacts[i].phoneNumbers != null)  // Checking if not null
+                //    for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+                //        alert("Type: " + contacts[i].phoneNumbers[j].type + "\n" +
+                //            "Value: " + contacts[i].phoneNumbers[j].value + "\n" +
+                //            "Preferred: " + contacts[i].phoneNumbers[j].pref);
+                //    }
+
+            }
+        }
+        function onContactError() {
+            alert('onError!');
+        }
+        function options() {
+        }
+
+        /** Called when browser load this page*/
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <a href="index.html">Home Page</a>
+    <h3>Contacts</h3>
+    <ul id="list">
+    </ul>
+</body>
+
+</html>

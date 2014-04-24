@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+    <title>JavaArc Hello Phone Gap</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+        /** Called when phonegap javascript is loaded */
+        function onDeviceReady() {
+            var accelerometerOptions = { frequency: 1000 }; // Update every 1 seconds
+            alert('1');
+            alert(navigator.accelerometer.watchAcceleration.toString());
+            alert(navigator.accelerometer.getCurrentAcceleration.toString());
+            navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
+            navigator.accelerometer.watchAcceleration(onSuccessCallback, onErrorCallback, accelerometerOptions);
+            alert('2');
+        }
+        function onSuccess() {
+            alert('s');
+        }
+        function onError() {
+            alert('h');
+        }
+        /** Called when browser load this page*/
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        function onSuccessCallback(acceleration) {
+            alert('ss');
+            alert(acceleration);
+            document.getElementById('x').innerHTML = acceleration.x;
+            document.getElementById('y').innerHTML = acceleration.y;
+            document.getElementById('z').innerHTML = acceleration.z;
+            document.getElementById('timestamp').innerHTML = acceleration.timestamp;
+        }
+        function onErrorCallback(error) {
+            alert('code: ' + error.code + '\n' +
+            'message: ' + error.message + '\n');
+        }
+
+    </script>
+</head>
+
+<body onload="init()">
+    <a href="index.html">Home Page</a>
+    <h1>Accelerometer</h1>
+    <table border="1">
+        <tr>
+            <td>X</td>
+            <td id="x"></td>
+            <tr>
+        <tr>
+            <td>Y</td>
+            <td id="y"></td>
+            <tr>
+        <tr>
+            <td>Z</td>
+            <td id="z"></td>
+            <tr>
+        <tr>
+            <td>Timestamp</td>
+            <td id="timestamp"></td>
+            <tr>
+    </table>
+</body>
+
+</html>
